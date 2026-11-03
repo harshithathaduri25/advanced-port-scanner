@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PORT HUNTER AI // Network Vector Reconnaissance</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Embedded high-fidelity HTML-to-PDF compilation engine -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        /* Embedded styling helper to isolate download actions without editing your style.css file */
+        .header-actions-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .pdf-export-btn {
+            background: rgba(245, 158, 11, 0.08);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            color: #f59e0b; /* Neon tactical orange highlight color */
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .pdf-export-btn:hover {
+            background: #f59e0b;
+            color: #000;
+            box-shadow: 0 0 8px rgba(245, 158, 11, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <nav class="top-nav">
+            <div class="nav-brand">
+                <div class="shield-logo">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="42" class="hunter-outer-ring"/>
+                        <circle cx="50" cy="50" r="24" class="hunter-inner-ring"/>
+                        <line x1="50" y1="2" x2="50" y2="20" class="hunter-cross"/>
+                        <line x1="50" y1="80" x2="50" y2="98" class="hunter-cross"/>
+                        <line x1="2" y1="50" x2="20" y2="50" class="hunter-cross"/>
+                        <line x1="80" y1="50" x2="98" y2="50" class="hunter-cross"/>
+                        <polygon points="50,38 60,50 50,62 40,50" class="hunter-core"/>
+                    </svg>
+                </div>
+                <div class="brand-info">
+                    <h2>PORT <span class="ai-glow">HUNTER</span> AI</h2>
+                    <span class="pulse-indicator"></span><span class="status-label">TACTICAL VECTOR RECONNAISSANCE</span>
+                </div>
+            </div>
+            <div class="system-time">
+                <span class="badge-node">TARGET LOCK: TRACING</span>
+            </div>
+        </nav>
+
+        <div class="dashboard-workspace">
+            <aside class="control-panel">
+                <div class="panel-card glass-panel command-card">
+                    <div class="card-header">
+                        <h3><i class="fa-solid fa-crosshairs text-cyan"></i> AI TARGET MATRIX</h3>
+                        <p class="card-subtitle">Feed infrastructure boundaries into Port Hunter's cognitive hunting framework.</p>
+                    </div>
+                    
+                    <form id="scan-form" class="command-form">
+                        <div class="textarea-container">
+                            <textarea id="prompt-input" placeholder="Instruct Port Hunter AI... e.g., 'Hunt down active assets on localhost between ports 80 and 443.'" required></textarea>
+                            <div class="textarea-glow"></div>
+                        </div>
+                        <button type="submit" id="submit-btn" class="glow-button">
+                            <span><i class="fa-solid fa-bullseye"></i> ENGAGE NETWORK HUNT</span>
+                        </button>
+                    </form>
+                </div>
+
+                <div id="status-card" class="panel-card glass-panel status-panel hidden">
+                    <div class="radar-container">
+                        <div class="radar-line"></div>
+                        <div class="radar-ring"></div>
+                        <div class="radar-ring slow"></div>
+                    </div>
+                    <div class="status-details">
+                        <span class="telemetry-tag">RECON FEED</span>
+                        <p id="status-text">Calibrating hunting modules...</p>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="analytics-display">
+                <section id="metrics-grid" class="metrics-row hidden">
+                    <div class="stat-card glass-panel">
+                        <div class="stat-icon target-blue"><i class="fa-solid fa-network-wired"></i></div>
+                        <div class="stat-meta">
+                            <span class="stat-title">Intercept Target</span>
+                            <h4 id="metric-target">-</h4>
+                        </div>
+                    </div>
+                    <div class="stat-card glass-panel">
+                        <div class="stat-icon ports-purple"><i class="fa-solid fa-skull-crossbones"></i></div>
+                        <div class="stat-meta">
+                            <span class="stat-title">Captured Ports</span>
+                            <h4 id="metric-count">0</h4>
+                        </div>
+                    </div>
+                    <div class="stat-card glass-panel">
+                        <div class="stat-icon status-crimson"><i class="fa-solid fa-radar"></i></div>
+                        <div class="stat-meta">
+                            <span class="stat-title">Threat Assessment</span>
+                            <h4 id="metric-status">Awaiting Tracing</h4>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="results-wrapper" class="workspace-grid hidden">
+                    <div class="workspace-panel glass-panel">
+                        <div class="panel-title-bar">
+                            <h3><i class="fa-solid fa-map-location-dot"></i> EXPOSED INGRESS POINTS</h3>
+                            <span class="live-tag">CAPTURED VECTOR DATA</span>
+                        </div>
+                        <div class="panel-scroll-box" id="ports-output"></div>
+                    </div>
+
+                    <div class="workspace-panel glass-panel intelligence-border">
+                        <div class="panel-title-bar">
+                            <h3><i class="fa-solid fa-shield-cat"></i> COGNITIVE AUDIT REPORT</h3>
+                            <div class="header-actions-wrapper">
+                                <span class="model-tag">LLAMA-3.1 SENTINEL</span>
+                                <!-- Added sleek download tactical button alongside the tag badge -->
+                                <button id="download-pdf-btn" type="button" class="pdf-export-btn" title="Download Report Summary PDF">
+                                    <i class="fa-solid fa-file-pdf"></i> PDF
+                                </button>
+                            </div>
+                        </div>
+                        <div class="panel-scroll-box ai-rendered-content" id="ai-report-output"></div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('scan-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const prompt = document.getElementById('prompt-input').value;
+            const statusCard = document.getElementById('status-card');
+            const statusText = document.getElementById('status-text');
+            const resultsWrapper = document.getElementById('results-wrapper');
+            const metricsGrid = document.getElementById('metrics-grid');
+            const submitBtn = document.getElementById('submit-btn');
+
+            statusCard.classList.remove('hidden');
+            resultsWrapper.classList.add('hidden');
+            metricsGrid.classList.add('hidden');
+            submitBtn.disabled = true;
+            statusText.innerText = "Extracting target properties using cognitive LLM interpreter...";
+
+            try {
+                const response = await fetch('/api/scan', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt })
+                });
+                
+                statusText.innerText = "Deploying concurrent network sweeps across perimeter matrix...";
+                const data = await response.json();
+                
+                if (data.error) {
+                    alert("Hunter Core Error: " + data.error);
+                    return;
+                }
+
+                document.getElementById('metric-target').innerText = data.scan_results.target;
+                const openPortsFound = data.scan_results.open_ports.length;
+                document.getElementById('metric-count').innerText = openPortsFound;
+                
+                const threatStatus = document.getElementById('metric-status');
+                if (openPortsFound === 0) {
+                    threatStatus.innerText = "ZERO VECTORS DETECTED";
+                    threatStatus.style.color = "#00ffaa";
+                } else {
+                    threatStatus.innerText = "EXPOSURE IDENTIFIED";
+                    threatStatus.style.color = "#ff3366";
+                }
+
+                const portsDiv = document.getElementById('ports-output');
+                portsDiv.innerHTML = "";
+                
+                if(openPortsFound === 0) {
+                    portsDiv.innerHTML = `
+                        <div class="empty-state-container">
+                            <i class="fa-solid fa-fingerprint safe-icon"></i>
+                            <p>No open endpoints captured. Perimeter is locked down tight.</p>
+                        </div>`;
+                } else {
+                    let tableHtml = `<table class="aegis-table"><thead><tr><th>Intercepted Port</th><th>Protocol Mapping</th><th>Version Metadata Signature</th></tr></thead><tbody>`;
+                    data.scan_results.open_ports.forEach(p => {
+                        tableHtml += `
+                            <tr>
+                                <td><span class="port-chip">${p.port}</span></td>
+                                <td><span class="service-identity">${p.service.toUpperCase()}</span></td>
+                                <td><span class="version-banner"><i class="fa-solid fa-crosshairs"></i> ${p.version}</span></td>
+                            </tr>`;
+                    });
+                    tableHtml += `</tbody></table>`;
+                    portsDiv.innerHTML = tableHtml;
+                }
+
+                document.getElementById('ai-report-output').innerHTML = data.ai_report;
+                
+                metricsGrid.classList.remove('hidden');
+                resultsWrapper.classList.remove('hidden');
+
+            } catch (err) {
+                alert("Target tracing sequence interrupted.");
+            } finally {
+                statusCard.classList.add('hidden');
+                submitBtn.disabled = false;
+            }
+        });
+
+        // Dedicated PDF Rendering and Compilation System Event Listener
+        document.getElementById('download-pdf-btn').addEventListener('click', () => {
+            const reportElement = document.getElementById('ai-report-output');
+            const currentTarget = document.getElementById('metric-target').innerText || "Unknown_Target";
+            
+            // Configuration rules designed to accurately snap the elements without ruining dark aesthetics
+            const captureOptions = {
+                margin:       [12, 12, 12, 12],
+                filename:     `PortHunter_AI_Audit_${currentTarget}.pdf`,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { 
+                    scale: 2, 
+                    useCORS: true, 
+                    backgroundColor: '#091121' /* Uses your layout's slate-dark canvas color background */
+                },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            // Process dynamic container element into a structural PDF artifact file download
+            html2pdf().set(captureOptions).from(reportElement).save();
+        });
+    </script>
+</body>
+</html>

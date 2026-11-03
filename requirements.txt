@@ -1,0 +1,7 @@
+flask
+requests
+paramiko
+dnspython
+pillow
+openai
+python-dotenv
